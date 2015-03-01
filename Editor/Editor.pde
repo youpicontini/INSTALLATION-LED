@@ -2,8 +2,7 @@ import controlP5.*;
 
 
 ControlP5 cp5;
-Textlabel animationsLabel;
-RadioButton radioAnimSelec;
+ListBox listAnimations;
 
 Textlabel optionsAnimElementLabel;
 RadioButton radioOptionsAnimElement;
@@ -18,9 +17,11 @@ Button PlayAnimButton;
 Button SaveAnimButton;
 Textlabel keyframe_name;
 Textfield keyframe_begin_input;
-Textfield keyframe_end_input;
+CheckBox keyframe_end_checkbox;
 Button SaveKeyframeButton;
-
+int selectedIndex = -1;//no selection initially
+int colourBG = color(0);
+int colourSelected = color(150);
 
 void setup() {
 
@@ -32,29 +33,35 @@ void setup() {
   // *****ANIMATIONS*****
   Group animationsGroup = cp5.addGroup("Animations")
                           ;
-  animationsLabel = cp5.addTextlabel("label")
-                    .setText("ANIMATIONS")
-                    .setPosition(20,140)
-                    .setGroup("Animations");  
-  
-  radioAnimSelec = cp5.addRadioButton("Animselection")
-                    .setPosition(20,160)
-                    .setSize(20,20)
-                    .setColorForeground(color(120))
-                    .setColorActive(color(255))
-                    .setColorLabel(color(255))
-                    .setItemsPerRow(1)
-                    .setSpacingColumn(30)
-                    .setGroup("Animations");
   
   newAnimButton = cp5.addButton("New Animation")
                    .setValue(0)
                    .setPosition(20,600)
                    .setSize(67,19)
                    .setGroup("Animations");
-     
-  for(int i=0;i<20;i++){
-    radioAnimSelec.addItem("Animation_"+i,i);
+
+  
+  listAnimations = cp5.addListBox("Animations list")
+                    .setPosition(20,160)
+                    .setSize(170, 440)
+                    .setItemHeight(20)
+                    .setBarHeight(20)
+                    .setColorBackground(color(50))
+                    .setColorActive(color(150))
+                    .setColorForeground(color(150))
+                    .setGroup("Animations");
+
+  listAnimations.captionLabel().toUpperCase(true);
+  listAnimations.captionLabel();
+  listAnimations.captionLabel().set("Animations");
+  listAnimations.captionLabel().setColor(color(150));
+  listAnimations.captionLabel().style().marginTop = 3;
+  listAnimations.valueLabel().style().marginTop = 3;
+  
+  for (int i=0;i<80;i++) {
+    ListBoxItem lbi = listAnimations.addItem("animation "+i, i);
+    lbi.setColorBackground(color(0))
+       ;
   }
   
   
@@ -102,17 +109,23 @@ void setup() {
                          .setFocus(true)
                          .setGroup("keyframEditGroup");   
                         
-  keyframe_end_input = cp5.addTextfield("until (s)")
-                       .setPosition(280,600)
-                       .setSize(50,15)
-                       .setFocus(true)
-                       .setGroup("keyframEditGroup"); 
+  keyframe_end_checkbox = cp5.addCheckBox("endkeyframe")
+                           .setPosition(260,600)
+                           .setColorForeground(color(120))
+                           .setColorActive(color(255))
+                           .setColorLabel(color(255))
+                           .setSize(20, 20)
+                           .setItemsPerRow(3)
+                           .setSpacingColumn(30)
+                           .setSpacingRow(20)
+                           .addItem("last keyframe?", 0)
+                           .setGroup("keyframEditGroup");
 
   cp5.getTooltip().setDelay(0).register("until (s)","if blank, the default value will be the starting time of the next keyframe");
   
   SaveKeyframeButton = cp5.addButton("save keyframe")
                        .setValue(0)
-                       .setPosition(350,600)
+                       .setPosition(360,600)
                        .setSize(80,19)
                        .setGroup("keyframEditGroup"); 
   
@@ -174,31 +187,19 @@ void draw() {
 }
 
 
-void keyPressed() {
-  switch(key) {
-    case('0'): radioAnimSelec.deactivateAll(); break;
-    case('1'): radioAnimSelec.activate(0); break;
-    case('2'): radioAnimSelec.activate(1); break;
-    case('3'): radioAnimSelec.activate(2); break;
-    case('4'): radioAnimSelec.activate(3); break;
-    case('5'): radioAnimSelec.activate(4); break;
-  }
-  
-}
 
-
-void controlEvent(ControlEvent theEvent) {
-  if(theEvent.isFrom(radioAnimSelec)) {
-    print("got an event from "+theEvent.getName()+"\t");
-    for(int i=0;i<theEvent.getGroup().getArrayValue().length;i++) {
-      print(int(theEvent.getGroup().getArrayValue()[i]));
+void controlEvent(ControlEvent e) {
+  if(e.name().equals("Animations list")){
+    int currentIndex = (int)e.group().value();
+    println("currentIndex:  "+currentIndex);
+    if(selectedIndex >= 0){//if something was previously selected
+      ListBoxItem previousItem = listAnimations.getItem(selectedIndex);//get the item
+      previousItem.setColorBackground(colourBG);//and restore the original bg colours
     }
-    println("\t "+theEvent.getValue());
+    selectedIndex = currentIndex;//update the selected index
+    listAnimations.getItem(selectedIndex).setColorBackground(colourSelected);//and set the bg colour to be the active/'selected one'...until a new selection is made and resets this, like above
+
   }
-}
 
-void radioButton(int a) {
-  println("a radio Button event: "+a);
 }
-
 
