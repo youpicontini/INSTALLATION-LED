@@ -31,8 +31,7 @@ void setup() {
   
   
   // *****ANIMATIONS*****
-  Group animationsGroup = cp5.addGroup("Animations")
-                          ;
+  Group animationsGroup = cp5.addGroup("Animations");
   
   newAnimButton = cp5.addButton("New Animation")
                    .setValue(0)
@@ -60,8 +59,7 @@ void setup() {
   
   for (int i=0;i<80;i++) {
     ListBoxItem lbi = listAnimations.addItem("animation "+i, i);
-    lbi.setColorBackground(color(0))
-       ;
+    lbi.setColorBackground(color(0));
   }
   
   
@@ -125,33 +123,37 @@ void setup() {
   
   SaveKeyframeButton = cp5.addButton("save keyframe")
                        .setValue(0)
-                       .setPosition(360,600)
-                       .setSize(80,19)
+                       .setPosition(690,600)
+                       .setSize(72,20)
                        .setGroup("keyframEditGroup"); 
+  
+  Group keyframNavGroup = cp5.addGroup("keyframNavGroup");
+  int nav_grp_y=680;
+  
   
   PreviousKeyFrameButton = cp5.addButton("Previous")
                            .setValue(0)
-                           .setPosition(200,640)
-                           .setSize(47,19)
-                           .setGroup("keyframEditGroup"); 
+                           .setPosition(200,nav_grp_y)
+                           .setGroup("keyframNavGroup")
+                           .setSize(100,40);
                              
   PlayAnimButton = cp5.addButton("play")
                    .setValue(0)
-                   .setPosition(305,640)
-                   .setSize(30,19)
-                   .setGroup("keyframEditGroup"); 
+                   .setPosition(355,nav_grp_y)
+                   .setGroup("keyframNavGroup")
+                   .setSize(100,40);
        
   SaveAnimButton = cp5.addButton("save")
                    .setValue(0)
-                   .setPosition(410,640)
-                   .setSize(30,19)
-                   .setGroup("keyframEditGroup"); 
+                   .setPosition(510,nav_grp_y)
+                   .setGroup("keyframNavGroup")
+                   .setSize(100,40);
        
   NextKeyFrameButton = cp5.addButton("Next")
                        .setValue(0)
-                       .setPosition(515,640)
-                       .setSize(30,19)
-                       .setGroup("keyframEditGroup"); 
+                       .setPosition(660,nav_grp_y)
+                       .setGroup("keyframNavGroup")
+                       .setSize(100,40);
        
    
   //*****TABS*****
@@ -171,7 +173,8 @@ void setup() {
    
    optionElementGroup.moveTo("editor");
    
-   keyframEditGroup.moveTo("editor");
+   keyframEditGroup.moveTo("editor");   
+   keyframNavGroup.moveTo("editor");
    
    NameAnimationLabel.moveTo("global");
  
