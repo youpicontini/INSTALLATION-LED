@@ -98,6 +98,9 @@ void setup() {
   //***** Animation main editor *****
   of = createGraphics(560, 420);
   
+
+  
+  
   NameAnimationLabel = cp5.addTextlabel("nameAnimElementLabel")
                         .setText("Choose Animation")
                         .setPosition(200,140);
@@ -107,13 +110,13 @@ void setup() {
   keyframe_name = cp5.addTextlabel("keyframe_num")
                     .setText("keyframe_num")
                     .setPosition(200,580)
-                    .setGroup("keyframEditGroup"); 
+                    .setGroup("keyframEditGroup");
 
   keyframe_begin_input = cp5.addTextfield("at (s)")
                          .setPosition(200,600)
                          .setSize(50,15)
                          .setFocus(true)
-                         .setGroup("keyframEditGroup");   
+                         .setGroup("keyframEditGroup");
 
   keyframe_end_checkbox = cp5.addCheckBox("endkeyframe")
                            .setPosition(260,600)
@@ -174,7 +177,7 @@ void setup() {
    .activateEvent(true)
    .setId(2);
    
-   //move to tabs
+  //move to tabs
   animationsGroup.moveTo("global");
   newAnimButton.moveTo("editor");  
    
@@ -184,14 +187,13 @@ void setup() {
   keyframNavGroup.moveTo("editor");
    
   NameAnimationLabel.moveTo("global");
- 
 }
 
 void draw() {
-  background(0);  
+  background(100);
   of.beginDraw();
-  of.background(100);
-  of.stroke(255);
+  of.background(color(0));
+  of.stroke(0);
   of.endDraw();
   image(of, 200, 160);
 }
@@ -201,6 +203,8 @@ void draw() {
 void controlEvent(ControlEvent e) {
   if(e.name().equals("newAnimName_input")){
     highlightSelectedAnim(indexAnim-1);
+    if (indexAnim>=19)
+      listAnimations.scroll(1);
   }
   if(e.name().equals("Animations list")){
     int currentIndex = (int)e.group().value();
@@ -214,7 +218,7 @@ void controlEvent(ControlEvent e) {
 
 public void new_animation() {
   if (NameAnimationLabel.isVisible()){
-    NameAnimationLabel.hide(); 
+    NameAnimationLabel.hide();
     newAnimName_input.show();
     newAnimName_input.setFocus(true);
   }
