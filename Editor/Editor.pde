@@ -5,7 +5,7 @@ ControlP5 cp5;
 
 ListBox listAnimations;
 Animation anim;
-
+PreviewController previewController;
 
 Textlabel optionsAnimElementLabel;
 RadioButton radioOptionsAnimElement;
@@ -14,7 +14,6 @@ Canvas AnimationEditorMain;
 Textlabel NameAnimationLabel;
 Textfield newAnimName_input;
 
-PGraphics of;
 Button PreviousKeyFrameButton;
 Button NextKeyFrameButton;
 Button PlayAnimButton;
@@ -34,7 +33,9 @@ void setup() {
   background(0);
   cp5 = new ControlP5(this);
   anim = new Animation();
-
+  previewController = new PreviewController(5,cp5);
+  previewController.setup();
+  
   // *****ANIMATIONS*****
   Group animationsGroup = cp5.addGroup("Animations");
 
@@ -68,8 +69,6 @@ void setup() {
   listAnimations.captionLabel().style().marginTop = 3;
   listAnimations.valueLabel().style().marginTop = 3;
   
-  
-  
  //***** options elements led, light etc.. *****
 
  Group optionElementGroup = cp5.addGroup("optionElementGroup");
@@ -77,6 +76,7 @@ void setup() {
  optionsAnimElementLabel = cp5.addTextlabel("optionsAnimElementLabel")
                             .setText("LED OPTIONS")
                             .setPosition(800,140)
+                            .hide()
                             .setGroup("optionElementGroup");
 
  radioOptionsAnimElement = cp5.addRadioButton("OptionAnimElement")
@@ -87,20 +87,15 @@ void setup() {
                             .setColorLabel(color(255))
                             .setItemsPerRow(1)
                             .setSpacingColumn(30)
+                            .hide()
                             .setGroup("optionElementGroup");
 
   radioOptionsAnimElement.addItem("on",1).setGroup("optionElementGroup");
   
   radioOptionsAnimElement.addItem("off",2).setGroup("optionElementGroup");
 
-
-
   //***** Animation main editor *****
-  of = createGraphics(560, 420);
-  
 
-  
-  
   NameAnimationLabel = cp5.addTextlabel("nameAnimElementLabel")
                         .setText("Choose Animation")
                         .setPosition(200,140);
@@ -165,7 +160,6 @@ void setup() {
                        .setGroup("keyframNavGroup")
                        .setSize(100,40);
 
-
   //*****TABS*****
   cp5.addTab("editor");
   cp5.getTab("default")
@@ -191,14 +185,8 @@ void setup() {
 
 void draw() {
   background(100);
-  of.beginDraw();
-  of.background(color(0));
-  of.stroke(0);
-  of.endDraw();
-  image(of, 200, 160);
+  previewController.draw();
 }
-
-
 
 void controlEvent(ControlEvent e) {
   if(e.name().equals("newAnimName_input")){
@@ -214,6 +202,15 @@ void controlEvent(ControlEvent e) {
     NameAnimationLabel.show(); 
     newAnimName_input.hide();
   }
+  if (e.name().equals("0")) {
+    optionsAnimElementLabel.show();
+    radioOptionsAnimElement.show();
+  }
+  
+  if (e.name().equals("on")){
+    print("lol");
+  }
+  
 }
 
 public void new_animation() {
@@ -235,6 +232,10 @@ public void newAnimName_input(String theText) {
   indexAnim++;
   newAnimName_input.hide();
   NameAnimationLabel.show();
+}
+
+public void highlightSelectedItem(int id){
+  
 }
 
 public void highlightSelectedAnim(int currentIndex){

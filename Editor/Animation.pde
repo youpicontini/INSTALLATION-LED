@@ -1,6 +1,7 @@
-class Animation {  
+class Animation {
+  
   Animation () {
-  } 
+  }
   void run() {
   }
 }
