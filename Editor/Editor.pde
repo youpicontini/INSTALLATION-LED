@@ -3,16 +3,14 @@ import controlP5.*;
 
 ControlP5 cp5;
 
-ListBox listAnimations;
+
 Animation anim;
 PreviewController previewController;
+OptionAnimation optAnim;
+ListAnimation listAnim;
 
-Textlabel optionsAnimElementLabel;
-RadioButton radioOptionsAnimElement;
-Button newAnimButton;
 Canvas AnimationEditorMain;
-Textlabel NameAnimationLabel;
-Textfield newAnimName_input;
+
 
 Button PreviousKeyFrameButton;
 Button NextKeyFrameButton;
@@ -22,10 +20,9 @@ Textlabel keyframe_name;
 Textfield keyframe_begin_input;
 CheckBox keyframe_end_checkbox;
 Button SaveKeyframeButton;
-int selectedIndex = -1;//no selection initially
+
 int colourBG = color(0);
 int colourSelected = color(150);
-int indexAnim=0;
 
 void setup() {
 
@@ -36,69 +33,21 @@ void setup() {
   previewController = new PreviewController(5,cp5);
   previewController.setup();
   
-  // *****ANIMATIONS*****
+  //****************Groups***** Group optionElementGroup = cp5.addGroup("optionElementGroup");
   Group animationsGroup = cp5.addGroup("Animations");
+  Group optionElementGroup = cp5.addGroup("optionElementGroup");
+  // *****ANIMATIONS*****
 
-  newAnimButton = cp5.addButton("new_animation")
-                   .setValue(0)
-                   .setPosition(20,600)
-                   .setSize(67,19)
-                   .setGroup("Animations");
+  optAnim = new OptionAnimation(cp5);
+  listAnim = new ListAnimation(cp5);
+
                    
-  newAnimName_input = cp5.addTextfield("newAnimName_input")
-                       .setPosition(200,120)
-                       .setSize(100,20)
-                       .setFocus(true)
-                       .setGroup("Animations")
-                       .hide();
 
-  listAnimations = cp5.addListBox("Animations list")
-                    .setPosition(20,160)
-                    .setSize(170, 440)
-                    .setItemHeight(20)
-                    .setBarHeight(20)
-                    .setColorBackground(color(50))
-                    .setColorActive(color(150))
-                    .setColorForeground(color(150))
-                    .setGroup("Animations");
-
-  listAnimations.captionLabel().toUpperCase(true);
-  listAnimations.captionLabel();
-  listAnimations.captionLabel().set("Animations");
-  listAnimations.captionLabel().setColor(color(150));
-  listAnimations.captionLabel().style().marginTop = 3;
-  listAnimations.valueLabel().style().marginTop = 3;
   
- //***** options elements led, light etc.. *****
-
- Group optionElementGroup = cp5.addGroup("optionElementGroup");
- 
- optionsAnimElementLabel = cp5.addTextlabel("optionsAnimElementLabel")
-                            .setText("LED OPTIONS")
-                            .setPosition(800,140)
-                            .hide()
-                            .setGroup("optionElementGroup");
-
- radioOptionsAnimElement = cp5.addRadioButton("OptionAnimElement")
-                            .setPosition(800,160)
-                            .setSize(20,20)
-                            .setColorForeground(color(120))
-                            .setColorActive(color(255))
-                            .setColorLabel(color(255))
-                            .setItemsPerRow(1)
-                            .setSpacingColumn(30)
-                            .hide()
-                            .setGroup("optionElementGroup");
-
-  radioOptionsAnimElement.addItem("on",1).setGroup("optionElementGroup");
   
-  radioOptionsAnimElement.addItem("off",2).setGroup("optionElementGroup");
-
   //***** Animation main editor *****
 
-  NameAnimationLabel = cp5.addTextlabel("nameAnimElementLabel")
-                        .setText("Choose Animation")
-                        .setPosition(200,140);
+
 
   Group keyframEditGroup = cp5.addGroup("keyframEditGroup");
 
@@ -171,16 +120,16 @@ void setup() {
    .activateEvent(true)
    .setId(2);
    
-  //move to tabs
-  animationsGroup.moveTo("global");
-  newAnimButton.moveTo("editor");  
+  //move to tabs 
    
   optionElementGroup.moveTo("editor");
-   
-  keyframEditGroup.moveTo("editor");   
+  animationsGroup.moveTo("global");
+  
+  listAnim.newAnimButton.moveTo("editor");
+  keyframEditGroup.moveTo("editor");
   keyframNavGroup.moveTo("editor");
-   
-  NameAnimationLabel.moveTo("global");
+  
+  listAnim.NameAnimationLabel.moveTo("global");
 }
 
 void draw() {
@@ -189,63 +138,24 @@ void draw() {
 }
 
 void controlEvent(ControlEvent e) {
-  if(e.name().equals("newAnimName_input")){
-    highlightSelectedAnim(indexAnim-1);
-    if (indexAnim>=19)
-      listAnimations.scroll(1);
+  if(e.name().equals("New animation name")){
+    //listAnim.highlightSelectedAnim(listAnim.indexAnim);
+    listAnim.newAnimNameinput(listAnim.newAnimName_input.getText());
+    if (listAnim.indexAnim>=19)
+      listAnim.listAnimations.scroll(1);
   }
   if(e.name().equals("Animations list")){
     int currentIndex = (int)e.group().value();
-    highlightSelectedAnim(currentIndex);
+    listAnim.highlightSelectedAnim(currentIndex);
   }
-  if (e.isTab() && e.getTab().getName()=="default" && newAnimName_input.isVisible()) {
-    NameAnimationLabel.show(); 
-    newAnimName_input.hide();
+  if (e.isTab() && e.getTab().getName()=="default" && listAnim.newAnimName_input.isVisible()) {
+    listAnim.NameAnimationLabel.show(); 
+    listAnim.newAnimName_input.hide();
   }
-  if (e.name().equals("0")) {
-    optionsAnimElementLabel.show();
-    radioOptionsAnimElement.show();
-  }
-  
-  if (e.name().equals("on")){
-    print("lol");
-  }
-  
-}
-
-public void new_animation() {
-  if (NameAnimationLabel.isVisible()){
-    NameAnimationLabel.hide();
-    newAnimName_input.show();
-    newAnimName_input.setFocus(true);
-  }
-  else {
-    NameAnimationLabel.show();
-    newAnimName_input.hide();
+  if(e.name().equals("new animation")){
+    listAnim.toggleVisibilityNewAnimation();
   }
 }
 
-public void newAnimName_input(String theText) {
-  int index;
-  index = indexAnim;
-  listAnimations.addItem(theText, index).setColorBackground(color(0));
-  indexAnim++;
-  newAnimName_input.hide();
-  NameAnimationLabel.show();
-}
 
-public void highlightSelectedItem(int id){
-  
-}
-
-public void highlightSelectedAnim(int currentIndex){
-  ListBoxItem item = listAnimations.getItem(currentIndex);
-  NameAnimationLabel.setText(item.getText());
-  if(selectedIndex >= 0){//if something was previously selected
-    ListBoxItem previousItem = listAnimations.getItem(selectedIndex);//get the item
-    previousItem.setColorBackground(colourBG);//and restore the original bg colours
-  }
-  selectedIndex = currentIndex;//update the selected index
-  listAnimations.getItem(selectedIndex).setColorBackground(colourSelected);//and set the bg colour to be the active/'selected one'...until a new selection is made and resets this, like above
-}
 
