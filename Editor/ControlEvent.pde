@@ -5,7 +5,7 @@ void controlEvent(ControlEvent e) {
   if(e.name().equals("New animation name")){
     listAnim.newAnimNameinput(listAnim.newAnimName_input.getText());
     listAnim.highlightSelectedAnim(listAnim.indexAnim-1);
-    if (listAnim.indexAnim>=19)
+    if (listAnim.indexAnim>=28)
       listAnim.listAnimations.scroll(1);
   }
   if(e.name().equals("Animations list")){
@@ -26,3 +26,4 @@ void controlEvent(ControlEvent e) {
     print(TESTVAL);
   }
 }
+
