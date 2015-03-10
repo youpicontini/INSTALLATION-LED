@@ -2,8 +2,6 @@ import controlP5.*;
 
 
 ControlP5 cp5;
-
-
 Animation anim;
 PreviewController previewController;
 OptionAnimation optAnim;
@@ -17,13 +15,14 @@ Button NextKeyFrameButton;
 Button PlayAnimButton;
 Button SaveAnimButton;
 Textlabel keyframe_name;
-Textfield keyframe_begin_input;
+Textfield keyframe_duration_input;
 CheckBox keyframe_end_checkbox;
 Button SaveKeyframeButton;
 
 int colourBG = color(0);
 int colourSelected = color(150);
 
+String TESTVAL;
 void setup() {
 
   size(1024,768);
@@ -33,7 +32,7 @@ void setup() {
   previewController = new PreviewController(5,cp5);
   previewController.setup();
   
-  //****************Groups***** Group optionElementGroup = cp5.addGroup("optionElementGroup");
+  //****************Groups***** 
   Group animationsGroup = cp5.addGroup("Animations");
   Group optionElementGroup = cp5.addGroup("optionElementGroup");
   // *****ANIMATIONS*****
@@ -46,9 +45,6 @@ void setup() {
   
   
   //***** Animation main editor *****
-
-
-
   Group keyframEditGroup = cp5.addGroup("keyframEditGroup");
 
   keyframe_name = cp5.addTextlabel("keyframe_num")
@@ -56,11 +52,14 @@ void setup() {
                     .setPosition(200,580)
                     .setGroup("keyframEditGroup");
 
-  keyframe_begin_input = cp5.addTextfield("at (s)")
+  keyframe_duration_input = cp5.addTextfield("for (s)")
                          .setPosition(200,600)
-                         .setSize(50,15)
+                         .setSize(50,20)
                          .setFocus(true)
-                         .setGroup("keyframEditGroup");
+                         .setGroup("keyframEditGroup")
+                         .setValue(0.5)
+                         .setText("0.5");
+                         
 
   keyframe_end_checkbox = cp5.addCheckBox("endkeyframe")
                            .setPosition(260,600)
@@ -74,7 +73,6 @@ void setup() {
                            .addItem("last keyframe?", 0)
                            .setGroup("keyframEditGroup");
 
-  cp5.getTooltip().setDelay(0).register("until (s)","if blank, the default value will be the starting time of the next keyframe");
   
   SaveKeyframeButton = cp5.addButton("save keyframe")
                        .setValue(0)
@@ -86,22 +84,22 @@ void setup() {
   int nav_grp_y=680;
 
   PreviousKeyFrameButton = cp5.addButton("Previous")
-                           .setValue(0)
-                           .setPosition(200,nav_grp_y)
-                           .setGroup("keyframNavGroup")
-                           .setSize(100,40);
+                              .setValue(0)
+                              .setPosition(200,nav_grp_y)
+                              .setGroup("keyframNavGroup")
+                              .setSize(100,40);
    
   PlayAnimButton = cp5.addButton("play")
-                   .setValue(0)
-                   .setPosition(355,nav_grp_y)
-                   .setGroup("keyframNavGroup")
-                   .setSize(100,40);
+                      .setValue(0)
+                      .setPosition(355,nav_grp_y)
+                      .setGroup("keyframNavGroup")
+                      .setSize(100,40);
 
   SaveAnimButton = cp5.addButton("save")
-                   .setValue(0)
-                   .setPosition(510,nav_grp_y)
-                   .setGroup("keyframNavGroup")
-                   .setSize(100,40);
+                      .setValue(0)
+                      .setPosition(510,nav_grp_y)
+                      .setGroup("keyframNavGroup")
+                      .setSize(100,40);
 
   NextKeyFrameButton = cp5.addButton("Next")
                        .setValue(0)
@@ -112,13 +110,13 @@ void setup() {
   //*****TABS*****
   cp5.addTab("editor");
   cp5.getTab("default")
-   .activateEvent(true)
-   .setLabel("player")
-   .setId(1);
+     .activateEvent(true)
+     .setLabel("player")
+     .setId(1);
 
   cp5.getTab("editor")
-   .activateEvent(true)
-   .setId(2);
+     .activateEvent(true)
+     .setId(2);
    
   //move to tabs 
    
@@ -137,25 +135,6 @@ void draw() {
   previewController.draw();
 }
 
-void controlEvent(ControlEvent e) {
-  if(e.name().equals("New animation name")){
-    //listAnim.highlightSelectedAnim(listAnim.indexAnim);
-    listAnim.newAnimNameinput(listAnim.newAnimName_input.getText());
-    if (listAnim.indexAnim>=19)
-      listAnim.listAnimations.scroll(1);
-  }
-  if(e.name().equals("Animations list")){
-    int currentIndex = (int)e.group().value();
-    listAnim.highlightSelectedAnim(currentIndex);
-  }
-  if (e.isTab() && e.getTab().getName()=="default" && listAnim.newAnimName_input.isVisible()) {
-    listAnim.NameAnimationLabel.show(); 
-    listAnim.newAnimName_input.hide();
-  }
-  if(e.name().equals("new animation")){
-    listAnim.toggleVisibilityNewAnimation();
-  }
-}
 
 
 

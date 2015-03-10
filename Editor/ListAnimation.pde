@@ -7,11 +7,14 @@ class ListAnimation {
   
   int indexAnim;
   int selectedIndex;//no selection initially
+  int colorBG = color(0);
+  int colorSelected = color(150);
   
   ListAnimation(ControlP5 cp5){
     
     indexAnim = 0;
     selectedIndex = -1;
+    
     newAnimButton = cp5.addButton("new animation")
                        .setValue(0)
                        .setPosition(20,600)
@@ -70,10 +73,10 @@ class ListAnimation {
     NameAnimationLabel.setText(item.getText());
     if(selectedIndex >= 0){//if something was previously selected
       ListBoxItem previousItem = listAnimations.getItem(selectedIndex);//get the item
-      previousItem.setColorBackground(colourBG);//and restore the original bg colours
+      previousItem.setColorBackground(colorBG);//and restore the original bg colours
     }
     selectedIndex = currentIndex;//update the selected index
-    listAnimations.getItem(selectedIndex).setColorBackground(colourSelected);//and set the bg colour to be the active/'selected one'...until a new selection is made and resets this, like above
+    listAnimations.getItem(selectedIndex).setColorBackground(colorSelected);//and set the bg colour to be the active/'selected one'...until a new selection is made and resets this, like above
   }
 }
 
