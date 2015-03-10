@@ -17,20 +17,20 @@ class ListAnimation {
     
     newAnimButton = cp5.addButton("new animation")
                        .setValue(0)
-                       .setPosition(20,600)
-                       .setSize(67,19)
+                       .setPosition(20,730)
+                       .setSize(170,20)
                        .setGroup("Animations");
                        
     newAnimName_input = cp5.addTextfield("New animation name")
-                       .setPosition(200,120)
-                       .setSize(100,20)
+                       .setPosition(200,20)
+                       .setSize(170,20)
                        .setFocus(true)
                        .setGroup("Animations")
                        .hide();
   
     listAnimations = cp5.addListBox("Animations list")
-                      .setPosition(20,160)
-                      .setSize(170, 440)
+                      .setPosition(20,80)
+                      .setSize(170, 640)
                       .setItemHeight(20)
                       .setBarHeight(20)
                       .setColorBackground(color(50))
@@ -38,15 +38,14 @@ class ListAnimation {
                       .setColorForeground(color(150))
                       .setGroup("Animations");
   
-    listAnimations.captionLabel().toUpperCase(true);
-    listAnimations.captionLabel().set("Animations");
-    listAnimations.captionLabel().setColor(color(150));
-    listAnimations.captionLabel().style().marginTop = 3;
-    listAnimations.valueLabel().style().marginTop = 3;
+    listAnimations.captionLabel().toUpperCase(true)
+                                 .set("Animations")
+                                 .setColor(color(150));
+    listAnimations.captionLabel().style().marginTop = 5;
       
     NameAnimationLabel = cp5.addTextlabel("nameAnimElementLabel")
                           .setText("Choose Animation")
-                          .setPosition(200,140);
+                          .setPosition(200,40);
   }
   
   public void toggleVisibilityNewAnimation() {

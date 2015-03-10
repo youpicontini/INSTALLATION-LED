@@ -13,7 +13,7 @@ class PreviewController {
   }
   
   void setup(){
-    of = createGraphics(560, 420);
+    of = createGraphics(1050, 650);
   }
   
   void draw(){
@@ -21,7 +21,7 @@ class PreviewController {
     of.background(color(0));
     of.stroke(0);
     of.endDraw();
-    image(of, 200, 160);
+    image(of, 200, 60);
   }
 }
 

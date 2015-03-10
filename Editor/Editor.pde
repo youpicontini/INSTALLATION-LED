@@ -6,7 +6,8 @@ Animation anim;
 PreviewController previewController;
 OptionAnimation optAnim;
 ListAnimation listAnim;
-
+Textlabel Project_name;
+Textlabel frameRate_project;
 Canvas AnimationEditorMain;
 
 
@@ -19,14 +20,10 @@ Textfield keyframe_duration_input;
 CheckBox keyframe_end_checkbox;
 Button SaveKeyframeButton;
 
-int colourBG = color(0);
-int colourSelected = color(150);
-
 String TESTVAL;
 void setup() {
 
-  size(1024,768);
-  background(0);
+  size(1440,900);
   cp5 = new ControlP5(this);
   anim = new Animation();
   previewController = new PreviewController(5,cp5);
@@ -39,73 +36,61 @@ void setup() {
 
   optAnim = new OptionAnimation(cp5);
   listAnim = new ListAnimation(cp5);
-
-                   
-
   
+  Project_name = cp5.addTextlabel("projectname")
+                    .setText("L8DIAMOND")
+                    .setPosition(880,20)
+                    .setColorValue(0x00ffff)
+                    .setFont(createFont("",30));
+  
+  frameRate_project = cp5.addTextlabel("projectname")
+                    .setPosition(800,20)
+                    .setColorValue(0x00ffff)
+                    .setFont(createFont("",30));
   
   //***** Animation main editor *****
   Group keyframEditGroup = cp5.addGroup("keyframEditGroup");
 
+  int nav_grp_y=710;
   keyframe_name = cp5.addTextlabel("keyframe_num")
                     .setText("keyframe_num")
-                    .setPosition(200,580)
+                    .setPosition(200,nav_grp_y)
                     .setGroup("keyframEditGroup");
 
   keyframe_duration_input = cp5.addTextfield("for (s)")
-                         .setPosition(200,600)
+                         .setPosition(200,nav_grp_y+20)
                          .setSize(50,20)
                          .setFocus(true)
                          .setGroup("keyframEditGroup")
                          .setValue(0.5)
                          .setText("0.5");
-                         
 
-  keyframe_end_checkbox = cp5.addCheckBox("endkeyframe")
-                           .setPosition(260,600)
-                           .setColorForeground(color(120))
-                           .setColorActive(color(255))
-                           .setColorLabel(color(255))
-                           .setSize(20, 20)
-                           .setItemsPerRow(3)
-                           .setSpacingColumn(30)
-                           .setSpacingRow(20)
-                           .addItem("last keyframe?", 0)
-                           .setGroup("keyframEditGroup");
-
-  
-  SaveKeyframeButton = cp5.addButton("save keyframe")
-                       .setValue(0)
-                       .setPosition(690,600)
-                       .setSize(72,20)
-                       .setGroup("keyframEditGroup"); 
-  
   Group keyframNavGroup = cp5.addGroup("keyframNavGroup");
-  int nav_grp_y=680;
+  
 
   PreviousKeyFrameButton = cp5.addButton("Previous")
                               .setValue(0)
-                              .setPosition(200,nav_grp_y)
+                              .setPosition(200,nav_grp_y+80)
                               .setGroup("keyframNavGroup")
                               .setSize(100,40);
    
   PlayAnimButton = cp5.addButton("play")
                       .setValue(0)
-                      .setPosition(355,nav_grp_y)
+                      .setPosition(355,nav_grp_y+80)
                       .setGroup("keyframNavGroup")
                       .setSize(100,40);
 
   SaveAnimButton = cp5.addButton("save")
                       .setValue(0)
-                      .setPosition(510,nav_grp_y)
+                      .setPosition(510,nav_grp_y+80)
                       .setGroup("keyframNavGroup")
                       .setSize(100,40);
 
   NextKeyFrameButton = cp5.addButton("Next")
-                       .setValue(0)
-                       .setPosition(660,nav_grp_y)
-                       .setGroup("keyframNavGroup")
-                       .setSize(100,40);
+                          .setValue(0)
+                          .setPosition(660,nav_grp_y+80)
+                          .setGroup("keyframNavGroup")
+                          .setSize(100,40);
 
   //*****TABS*****
   cp5.addTab("editor");
@@ -122,7 +107,7 @@ void setup() {
    
   optionElementGroup.moveTo("editor");
   animationsGroup.moveTo("global");
-  
+  Project_name.moveTo("global");
   listAnim.newAnimButton.moveTo("editor");
   keyframEditGroup.moveTo("editor");
   keyframNavGroup.moveTo("editor");
@@ -133,8 +118,6 @@ void setup() {
 void draw() {
   background(100);
   previewController.draw();
+  frameRate_project.setText(Float.toString(Math.round(frameRate)));
 }
-
-
-
 

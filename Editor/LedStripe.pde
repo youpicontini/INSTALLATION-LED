@@ -9,7 +9,7 @@ class LedStripe{
     id=Integer.toString(num);
     ledButton = cp5.addButton(id)
                        .setValue(0)
-                       .setPosition(200+x,160+y)
+                       .setPosition(200+x,60+y)
                        .setSize(200,5)
                        .setSwitch(true)
                        .moveTo("global");
