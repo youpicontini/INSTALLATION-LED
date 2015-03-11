@@ -17,8 +17,6 @@ void setup() {
   anim = new Animation();
   previewController = new PreviewController(5,cp5);
   previewController.setup();
-  
-  
 }
 
 void draw() {

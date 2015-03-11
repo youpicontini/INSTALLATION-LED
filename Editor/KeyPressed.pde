@@ -6,18 +6,18 @@ void keyPressed()
 {
   if (key == CODED) {
     if (keyCode == LEFT) {
-      guiManager.AnimEditNav.previousKeyFrame();
+      guiManager.animEditNav.previousKeyFrame();
     } 
     else if (keyCode == RIGHT) {
-      guiManager.AnimEditNav.nextKeyFrame();
+      guiManager.animEditNav.nextKeyFrame();
     }
   }
   if (key == CODED ){if(keyCode == CONTROL)pressingCTRL=true;}
   if(key=='p')pressingP=true;
   if(key=='s')pressingS=true;
     
-  if( pressingP && pressingCTRL) guiManager.AnimEditNav.playAnim();
-  if( pressingS && pressingCTRL) guiManager.AnimEditNav.saveAnim();;
+  if( pressingP && pressingCTRL) guiManager.animEditNav.playAnim();
+  if( pressingS && pressingCTRL) guiManager.animEditNav.saveAnim();;
 }
 
 void keyReleased()

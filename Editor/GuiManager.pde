@@ -5,7 +5,7 @@ class GuiManager{
     
   OptionAnimation optAnim;
   ListAnimation listAnim;
-  AnimationEditNav AnimEditNav;
+  AnimationEditNav animEditNav;
   
   Textlabel Project_name;
   Textlabel frameRate_project;
@@ -31,7 +31,7 @@ class GuiManager{
     // *****ANIMATIONS*****
     optAnim = new OptionAnimation(cp5);
     listAnim = new ListAnimation(cp5);
-    AnimEditNav = new AnimationEditNav(cp5);
+    animEditNav = new AnimationEditNav(cp5);
     // ******Project Details
     Project_name = cp5.addTextlabel("projectname")
                       .setText(PROJECTNAME)
@@ -53,7 +53,6 @@ class GuiManager{
     listAnim.NameAnimationLabel.moveTo("global");
   }
   
-  void setup(){}
   void draw(){
     frameRate_project.setText(""+Math.round(frameRate)).setColor(0xff000000);
     if (frameRate<25)frameRate_project.setColor  (0xffff0000);
