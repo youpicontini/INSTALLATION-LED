@@ -15,28 +15,29 @@ class ListAnimation {
     indexAnim = 0;
     selectedIndex = -1;
     
-    newAnimButton = cp5.addButton("new animation")
+    newAnimButton = cp5.addButton("newAnimation")
+                       .setLabel("new animation")
                        .setValue(0)
-                       .setPosition(20,730)
+                       .setPosition(20,830)
                        .setSize(170,20)
                        .setGroup("Animations");
                        
-    newAnimName_input = cp5.addTextfield("New animation name")
-                       .setPosition(200,20)
-                       .setSize(170,20)
-                       .setFocus(true)
-                       .setGroup("Animations")
-                       .hide();
-  
-    listAnimations = cp5.addListBox("Animations list")
-                      .setPosition(20,80)
-                      .setSize(170, 640)
-                      .setItemHeight(20)
-                      .setBarHeight(20)
-                      .setColorBackground(color(50))
-                      .setColorActive(color(150))
-                      .setColorForeground(color(150))
-                      .setGroup("Animations");
+    newAnimName_input = cp5.addTextfield("NewAnimationName")
+                           .setLabel("new animation name")
+                           .setPosition(200,20)
+                           .setSize(170,20)
+                           .setFocus(true)
+                           .setGroup("Animations")
+                           .hide();
+    listAnimations = cp5.addListBox("AnimationsList")
+                        .setPosition(20,80)
+                        .setSize(170, 740)
+                        .setItemHeight(20)
+                        .setBarHeight(20)
+                        .setColorBackground(color(50))
+                        .setColorActive(color(150))
+                        .setColorForeground(color(150))
+                        .setGroup("Animations");
   
     listAnimations.captionLabel().toUpperCase(true)
                                  .set("Animations")

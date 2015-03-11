@@ -1,9 +1,6 @@
-import controlP5.*;
-
-String id;
-Button ledButton;
-
 class LedStripe{
+  String id;
+  Button ledButton;
 
   LedStripe(PGraphics of, int x, int y, int num, ControlP5 cp5){
     id=Integer.toString(num);
