@@ -14,9 +14,10 @@ void setup() {
   frame.setTitle(PROJECTNAME);
   cp5 = new ControlP5(this);
   guiManager = new GuiManager(cp5);
-  anim = new Animation();
+  anim = new Animation("animealexos");
   previewController = new PreviewController(5,cp5);
   previewController.setup();
+  
 }
 
 void draw() {

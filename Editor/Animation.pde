@@ -1,8 +1,13 @@
 class Animation {
   
-  Animation () {
+  Keyframe keyframe;
+  int indexKeyframe=0;
+  
+  Animation (String name) {
   }
-  void run() {
+  
+  void addKeyframe(this.name this.indexKeyframe){
+    keyframe = new Keyframe(name, indexKeyframe);
   }
 }
 
