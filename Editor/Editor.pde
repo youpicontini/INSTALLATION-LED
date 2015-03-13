@@ -10,6 +10,7 @@ String PROJECTNAME;
 void setup() {
 
   size(1440,900);
+  
   PROJECTNAME="L8DIAMOND";
   frame.setTitle(PROJECTNAME);
   cp5 = new ControlP5(this);
@@ -22,7 +23,7 @@ void setup() {
 
 void draw() {
   background(100);
-  previewController.draw();
   guiManager.draw();
+  previewController.draw();
 }
 
