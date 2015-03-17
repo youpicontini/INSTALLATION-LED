@@ -22,7 +22,7 @@ void setup() {
 }
 
 void draw() {
-  background(100);
+  background(50);
   guiManager.draw();
   previewController.draw();
 }
